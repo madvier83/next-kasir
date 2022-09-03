@@ -1,23 +1,40 @@
-import React from "react"
+import React, { useState } from "react"
 
-export default function ItemCard() {
+export default function ItemCard({item, addOrder, removeOrder, qty}) {
     return (
-        <div className="select-none card card-compact border-primary-focus border-l-4 active:border-l-0 bg-primary duration-100 w-48 h-40 text-neutral-content mb-2 mr-2">
-            <div className="card-body">
-                <p>
-                    <small>Stocks: 100</small><br />
-                    <span className="text-xl font-bold">Fish and chips</span><br />
-                    {/* <marquee behavior="alternate" scrollAmount="1"><span className="text-xl font-bold">Fish and chips</span></marquee><br /> */}
-                    <b className="opacity-75">Rp. 3000</b>
-                </p>
-                <div className="card-actions justify-end">
-                    <div className="flex mt-4 items-center">
-                        <button className="btn btn-sm font-extrabold bg-opacity-10 border-none">-</button>
-                        <b className="text-bold mx-1">0</b>
-                        <button className="btn btn-sm font-extrabold bg-opacity-10 border-none">+</button>
-                    </div>
+        <div className="select-none card card-compact border-primary-focus border-l-4 active:border-l-0 bg-primary duration-100 w-48 h-36 text-primary-content mb-2 mr-2">
+            <div className=" mt-2 ml-4">
+                <div 
+                    className=""
+                    onClick={()=>{
+                        addOrder(item)
+                    }}
+                >
+                        <small className="opacity-60 font-semibold text-xs">Stock: {item.stock}</small><br />
+                        <span className="text-2xl font-bold">{item.item}</span><br />
+                        <b className="opacity-50">Rp. {item.price}</b>
                 </div>
             </div>
+
+            {(addOrder&&removeOrder)&&
+
+                <div className="flex justify-end">
+                    <div className="flex mt-3 mr-3 items-center">
+                        <button 
+                            className="btn bg-primary-focus bg-opacity-50 btn-sm hover:bg-primary-focus font-extrabold border-none"
+                            onClick={()=>{
+                                removeOrder(item)
+                            }}
+                            >-</button>
+                        <b className="text-bold mx-1">{qty}</b>
+                        <button 
+                            className="btn bg-primary-focus bg-opacity-50 hover:bg-primary-focus btn-sm font-extrabold border-none"
+                            onClick={()=>{
+                                addOrder(item)
+                            }}
+                        >+</button>
+                    </div>
+            </div>}
         </div>
     )
 }
