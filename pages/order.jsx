@@ -4,10 +4,16 @@ import Drawer from "../components/Drawer"
 import ItemCard from "../components/ItemCard"
 import CategoryCard from "../components/CategoryCard"
 import Head from "next/head"
-import { nanoid } from "nanoid"
 import numeral from "numeral"
+import { nanoid } from "nanoid"
+import html2canvas from "html2canvas"
 
+// const ComponentToPrint = forwardRef((props, ref) => (
+//     <div ref={ref}>Hello World</div>
+//   ));
 export default function Order() {
+    // const componentRef = useRef()
+
     const initialOrder = {
         id: "",
         date: "",
@@ -206,6 +212,17 @@ export default function Order() {
         </div>
     )
 
+    async function download() {
+        const canvas = await html2canvas(document.querySelector("#screenshot"),{backgroundColor:"#000000"});
+        canvas.style.display = "none";
+        document.body.appendChild(canvas);
+        const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        const a = document.createElement("a");
+        a.setAttribute("download", `${orders.date + " " + orders.id}`);
+        a.setAttribute("href", image);
+        a.click();
+    }
+
     return (
         <>
             <Head>
@@ -240,8 +257,9 @@ export default function Order() {
                         <div>
 
                             <div className="card bg-base-300 text-base-content shadow-xl">
-                                <div className="card-body w-80 relative">
 
+                                {/* struct print area */}
+                                <div id="screenshot" className="card-body bg-base-300 w-80 relative">
                                     <div className="flex place-items-end justify-between">
                                         <b className="card-title">Order</b>
                                         <div>
@@ -264,12 +282,14 @@ export default function Order() {
                                         <p className="text-sm">Cash</p>
                                         <b className="text-sm ml-auto">{orders.cash?numeral(orders.cash).format("0,0"):"-"}</b>
                                     </div>
-                                    <div className="flex opacity-50">
+                                    <div className="flex opacity-50 mb-4">
                                         <p className="text-sm">Change</p>
                                         <b className="text-sm ml-auto">{orders.cash?numeral(parseInt(orders.cash)-parseInt(orders.totals)).format("0,0"):"-"}</b>
                                     </div>
+                                </div>
 
-                                    <div className="flex flex-col mt-12">
+                                <div className="card-body bg-base-300 w-80 relative">
+                                    <div className="flex flex-col">
                                         <input 
                                             type="text" 
                                             placeholder="Cash" 
@@ -283,13 +303,22 @@ export default function Order() {
                                                     }
                                                 })
                                             }}
-                                        />
+                                            />
                                         <div className="flex justify-between">
-                                            <button className="btn btn-neutral w-1/2 mr-1" onClick={()=>setOrders(initialOrder)}>Clear</button>
-                                            <button className="btn btn-accent w-1/2">Checkout</button>
+                                            <button className="btn btn-neutral w-1/2 btn-md mr-1" onClick={()=>setOrders(initialOrder)}>Clear</button>
+                                            <button className="btn btn-accent w-1/2 btn-md flex" 
+                                            onClick={async ()=>{
+                                                await download(),
+                                                setOrders(initialOrder)
+                                            }}>Checkout
+                                            </button>
                                         </div>
                                     </div>
-                                    
+                                            {/* <div>
+                                                <button onClick={()=>download()}>
+                                                    Export As PNG
+                                                </button>
+                                            </div> */}
                                 </div>
                             </div>
                         </div>
