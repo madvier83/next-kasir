@@ -1,27 +1,31 @@
 import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import Navbar from "./Navbar";
+
+const ThemeContext = React.createContext(null);
 
 export default function Drawer({children}) {
     const router = useRouter()
-    const [theme, setTheme] = useState()
+    const [theme, setTheme] = useState("black")
     
     function themeInit() {
         if(window.localStorage.getItem("theme")===null){
-            window.localStorage.setItem("theme", "night")
+            window.localStorage.setItem("theme", "none")
         }
     }
     useEffect(()=>{
         themeInit()
         setTheme(window.localStorage.getItem("theme"))
-    }, [])
+    }, [theme])
     function setNewTheme(newTheme) {
         window.localStorage.setItem("theme", newTheme)
-        router.reload(window.location.pathname)
+        setTheme(newTheme)
     }
-    // console.log(router)
+
     return (
         <>
+            <ThemeContext.Provider value={theme}>
             <div data-theme={theme} className="drawer drawer-mobile">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
@@ -37,17 +41,21 @@ export default function Drawer({children}) {
                         <ul className="absolute bottom-20">
                             <p className="ml-2 mb-2 p-0">Themes</p>
                             <div className="flex flex-wrap opacity-50">
+                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("light")}>Light</button>
                             <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("dark")}>Dark</button>
+                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("dracula")}>Dracula</button>
+                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("black")}>Black</button>
                             <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("night")}>Night</button>
                             <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("forest")}>Forest</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("coffee")}>Coffee</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("dracula")}>Dracula</button>
                             <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("corporate")}>Corporate</button>
+                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("coffee")}>Coffee</button>
+                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("synthwave")}>Synthwave</button>
                             </div>
                         </ul>
                     </ul>
                 </div>
             </div>
+            </ThemeContext.Provider>
         </>
     )
 }

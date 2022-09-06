@@ -18,23 +18,20 @@ export default function Order() {
         id: "",
         date: "",
         items: [],
-        qty: 0, 
+        qtys: 0, 
         totals: 0,
         cash: "",
     }
     const [orders, setOrders] = useState(initialOrder)
-    const [categories, setCategories] = useState()
-    const [items, setItems] = useState()
-    const [itemsFilter, setItemsFilter] = useState()
+    const [history, setHistory] = useState([])
+    const [categories, setCategories] = useState([])
+    const [items, setItems] = useState([])
+    const [itemsFilter, setItemsFilter] = useState([])
 
     function categoriesInit(){
         let cat = window.localStorage.getItem("categories")
         if (cat===null) {
-            let categories = [{
-                id: nanoid(),
-                category: "General",
-                icon: "default"
-            }]
+            let categories = []
             categories = JSON.stringify(categories)
             window.localStorage.setItem("categories", categories)
             cat = window.localStorage.getItem("categories")
@@ -53,7 +50,6 @@ export default function Order() {
         items = JSON.parse(items)
         setItems(items)
     }
-
     function orderInit() {
         if(!orders.id) {
             const date = new Date().toJSON().slice(0,10).replace(/-/g,'/');
@@ -66,11 +62,19 @@ export default function Order() {
             })
         }
     }
+    function historyInit() {
+        if(window.localStorage.getItem("history")===null) {
+            window.localStorage.setItem("history", "[]")
+        }
+        const h = window.localStorage.getItem("history")
+        setHistory(JSON.parse(h))
+    }
 
     useEffect(()=>{
         categoriesInit()
         itemInit()
         orderInit()
+        historyInit()
     },[])
 
     function updateOrder() {
@@ -161,13 +165,29 @@ export default function Order() {
         updateOrder()
     }
 
+    async function submitHistory(event) {
+
+        event.preventDefault()
+        await download()
+
+        const newHistory = history
+        newHistory.unshift(orders)
+        setHistory(newHistory)
+        window.localStorage.setItem("history", JSON.stringify(history))
+
+        setOrders(initialOrder)
+    }
+
     function filterItems(filter) {
-        if(filter==="all"){
-            setItemsFilter(items)
-        }else{
-            let arr = items?.filter(item=>item.category===filter)
-            console.log(arr)
-            setItemsFilter(arr)
+        if(items.length>0) {
+
+            if(filter==="all"){
+                setItemsFilter(items)
+            }else{
+                let arr = items?.filter(item=>JSON.parse(item.category).id===filter)
+                console.log(arr)
+                setItemsFilter(arr)
+            }
         }
     }
     useEffect(()=>{
@@ -254,10 +274,9 @@ export default function Order() {
                     </div>
 
                     <div className="flex mt-2 mr-2">
-                        <div>
+                        <div className="mx-auto">
 
                             <div className="card bg-base-300 text-base-content shadow-xl">
-
                                 {/* struct print area */}
                                 <div id="screenshot" className="card-body bg-base-300 w-80 relative">
                                     <div className="flex place-items-end justify-between">
@@ -290,29 +309,26 @@ export default function Order() {
 
                                 <div className="card-body bg-base-300 w-80 relative">
                                     <div className="flex flex-col">
-                                        <input 
-                                            type="text" 
-                                            placeholder="Cash" 
-                                            className="input input-sm mb-2"
-                                            value={orders.cash}
-                                            onChange={event=>{
-                                                setOrders(prev=>{
-                                                    return {
-                                                        ...prev,
-                                                        cash:event.target.value
-                                                    }
-                                                })
-                                            }}
-                                            />
-                                        <div className="flex justify-between">
-                                            <button className="btn btn-neutral w-1/2 btn-md mr-1" onClick={()=>setOrders(initialOrder)}>Clear</button>
-                                            <button className="btn btn-accent w-1/2 btn-md flex" 
-                                            onClick={async ()=>{
-                                                await download(),
-                                                setOrders(initialOrder)
-                                            }}>Checkout
-                                            </button>
-                                        </div>
+                                        <form onSubmit={(event)=>submitHistory(event)}>
+                                            <input 
+                                                type="text" 
+                                                placeholder="Cash" 
+                                                className="input input-sm mb-2 w-full"
+                                                value={orders.cash}
+                                                onChange={event=>{
+                                                    setOrders(prev=>{
+                                                        return {
+                                                            ...prev,
+                                                            cash:event.target.value
+                                                        }
+                                                    })
+                                                }}
+                                                />
+                                            <div className="flex justify-between">
+                                                <div className="btn btn-neutral w-1/2 btn-md mr-1" onClick={()=>setOrders(initialOrder)}>Clear</div>
+                                                <button className="btn btn-accent w-1/2 btn-md flex">Checkout</button>
+                                            </div>
+                                        </form>
                                     </div>
                                             {/* <div>
                                                 <button onClick={()=>download()}>
@@ -321,6 +337,7 @@ export default function Order() {
                                             </div> */}
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

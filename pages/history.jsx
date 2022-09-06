@@ -1,9 +1,85 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
 import Drawer from "../components/Drawer"
 import Head from "next/head"
+import numeral from "numeral"
+import nanoid from "nanoid"
+import { useRouter } from "next/router"
 
 export default function History() {
+    const router = useRouter()
+    const [history, setHistory] = useState([])
+    const [item, setItem] = useState([])
+
+    function historyInit() {
+        if(!window.localStorage.getItem("history")) {
+            window.localStorage.setItem("history", "[]")
+        }
+        let h = JSON.parse(window.localStorage.getItem("history"))
+        setHistory(h)
+    }
+    useEffect(()=>{
+        historyInit()
+        setHistory(JSON.parse(window.localStorage.getItem("history")))
+    },[])
+
+    function deleteHistory(id){
+        const oldHistory = history
+        let newHistory = []
+        
+        for(let i=0; i<oldHistory.length; i++) {
+            if(oldHistory[i].id != id) {
+                newHistory.push(oldHistory[i])
+            }
+        }
+        console.log(newHistory)
+        newHistory = JSON.stringify(newHistory)
+        window.localStorage.setItem("history", newHistory)
+        historyInit()
+    }
+
+    let historyList = null
+    if(history.length > 0) {
+
+        historyList = history?.map(obj=>{
+        let itemList = ""
+        obj.items.map(item=>itemList += item.item + " x" + item.qty + " | ")
+        return (
+            <tr key={obj.id} className="group hover:text-accent cursor-pointer">   
+                <td>{obj.id}</td>
+                <td>{obj.date}</td>
+                <td>
+                    <div className="flex">
+                        <div className="overflow-scroll w-24 lg:w-64">
+                            <div className="">
+                            {itemList}                        
+                            </div>
+                        </div>
+                        <div>
+                            <button className="btn btn-xs ml-2">...</button>
+                        </div>
+                    </div>
+                </td>
+                <td>{numeral(obj.totals).format("0,0")}</td>
+                <td>{numeral(obj.cash).format("0,0")}</td>
+                <td>{numeral(obj.cash-obj.totals).format("0,0")}</td>
+                <td>
+                    <div className="flex">
+                        <button onClick={()=>deleteHistory(obj.id)} className="btn btn-xs btn-error px-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#000000aa" className="w-5 h-5">
+                            <path fillRule="evenodd" d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z" clipRule="evenodd" />
+                            </svg>
+                        </button>
+                        <label htmlFor="detail-modal" onClick={()=>setItem(obj)} className="btn btn-xs btn-info ml-1">
+                            Detail   
+                        </label>
+                    </div>
+                </td>
+            </tr>
+        )}
+        )
+    }
+    
     return (
         <>
             <Head>
@@ -11,7 +87,91 @@ export default function History() {
             </Head>
             <Navbar/>
             <Drawer>
-                History
+
+                <div className="pl-6 pt-4 flex flex-col">
+                    <div className="flex flex-col lg:w-[80vw] h-full">
+                        <h1 className="text-2xl font-bold text-base-content pt-2 pb-4">History</h1>
+                    </div>
+
+                    <label 
+                        onClick={()=>router.push("order")}
+                        className="btn btn-sm btn-primary shadow-lg mb-2 mr-2 w-44 select-none hover:animate-pulse">
+                        <span>+ Add Order</span>
+                    </label>
+                    {history.length>0?(
+
+                        <div className="overflow-x-auto">
+                        <table className="table table-zebra mb-64">
+                            <thead>
+                            <tr>
+                                <th className="w-24">id</th>
+                                <th className="w-24">Date</th>
+                                <th>Items</th>
+                                <th className="w-24">Total</th>
+                                <th className="w-24">Cash</th>
+                                <th className="w-24">Change</th>
+                                <th className="w-24">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {historyList}
+                            </tbody>
+                        </table>
+                        </div>
+                    ):(
+                        <h2 className="text-neutral-content opacity-50">// No History</h2>
+                    )}
+
+                </div>
+
+                {/* modal */}
+                <input type="checkbox" id="detail-modal" className="modal-toggle" />
+                    <div className="modal modal-bottom sm:modal-middle">
+                    <div className="modal-box">
+                        <div id="screenshot" className="card-body bg-base-300 w-80 relative flex mx-auto">
+                            <div className="flex place-items-end justify-between">
+                                <b className="card-title">Order</b>
+                                <div>
+                                    <small className="text-xs opacity-50 mb-1">{item.date}</small>
+                                    <small className="text-xs opacity-50 mb-1"> ID: {item.id}</small>
+                                </div>
+                            </div>
+                            <div className="divider"></div>
+
+                            { item.id && item.items.map(item=>
+                                <div className="flex" key={item.id}>
+                                    <p className="text-sm">{item.item}</p>
+                                    <div className="flex items-center w-1/2">
+                                        <small>{numeral(item.price).format("0,0")}
+                                            <span className="text-base-content ml-2">{item.qty}</span>
+                                        </small>
+                                        <b className="text-sm ml-auto">{numeral(item.price*item.qty).format("0,0")}</b>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="divider"></div>
+
+                            <div className="flex justify-between">
+                                <b className="card-title">Total {numeral(item.qtys).format("0,0")} item</b>
+                                <b className="card-title">{numeral(item.totals).format("0,0")}</b>
+                            </div>
+
+                            <div className="flex opacity-50">
+                                <p className="text-sm">Cash</p>
+                                <b className="text-sm ml-auto">{item.cash?numeral(item.cash).format("0,0"):"-"}</b>
+                            </div>
+                            <div className="flex opacity-50 mb-4">
+                                <p className="text-sm">Change</p>
+                                <b className="text-sm ml-auto">{item.cash?numeral(parseInt(item.cash)-parseInt(item.totals)).format("0,0"):"-"}</b>
+                            </div>
+                        </div>
+
+                        <div className="modal-action">
+                        <label htmlFor="detail-modal" className="btn">Close</label>
+                        </div>
+                    </div>
+                </div>
             </Drawer>
         </>
     )
