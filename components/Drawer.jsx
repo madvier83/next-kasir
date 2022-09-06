@@ -11,7 +11,7 @@ export default function Drawer({children}) {
     
     function themeInit() {
         if(window.localStorage.getItem("theme")===null){
-            window.localStorage.setItem("theme", "none")
+            window.localStorage.setItem("theme", "night")
         }
     }
     useEffect(()=>{

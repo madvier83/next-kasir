@@ -52,7 +52,7 @@ export default function Order() {
     }
     function orderInit() {
         if(!orders.id) {
-            const date = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+            const date = new Date().toLocaleString("en-us", {day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"});
             setOrders(prev=>{
                 return {
                     ...prev,
@@ -62,6 +62,18 @@ export default function Order() {
             })
         }
     }
+
+    // function updateDate () {
+    //     setInterval(() => { 
+    //         setOrders(prev=>{
+    //             return {...prev,
+    //             date: new Date().toLocaleString("en-us", {day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit"})
+    //             }
+    //         })
+    //   }, 1000);
+    // }
+    // updateDate()
+
     function historyInit() {
         if(window.localStorage.getItem("history")===null) {
             window.localStorage.setItem("history", "[]")
@@ -185,7 +197,6 @@ export default function Order() {
                 setItemsFilter(items)
             }else{
                 let arr = items?.filter(item=>JSON.parse(item.category).id===filter)
-                console.log(arr)
                 setItemsFilter(arr)
             }
         }

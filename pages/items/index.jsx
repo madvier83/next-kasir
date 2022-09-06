@@ -220,13 +220,13 @@ export default function Items() {
                             </div>
                         </div>
                     ) : (
-                        <div className="ml-6 mt-4">
+                        <div className="ml-4 mt-4">
                             <label 
                                 onClick={()=>setCategoryModal(prev=>!prev)}
                                 className="btn btn-sm btn-primary shadow-lg mb-2 mr-2 w-44 select-none hover:animate-pulse">
                                 <span>+ Add Category</span>
                             </label>
-                            <h1 className="opacity-50">// No Category</h1>
+                            <h1 className="opacity-50 ml-2">// No Category</h1>
                         </div>
                     )}
 
@@ -294,13 +294,13 @@ export default function Items() {
                             </div>
                         </div>
                     ) : (
-                        <div className="ml-6 mt-4">
+                        <div className="ml-4 mt-4">
                             <label 
                                 onClick={()=>setItemModal(prev=>!prev)}
                                 className="btn btn-sm btn-primary shadow-lg mb-2 mr-2 w-44 select-none hover:animate-pulse">
                                 <span>+ Add Item</span>
                             </label>
-                            <h1 className="opacity-50">// No Item</h1>
+                            <h1 className="opacity-50 ml-2">// No Item</h1>
                         </div>
                     )}
 
