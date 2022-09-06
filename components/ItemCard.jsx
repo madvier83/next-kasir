@@ -7,7 +7,7 @@ export default function ItemCard({item, addOrder, removeOrder, qty}) {
                 <div 
                     className=""
                     onClick={()=>{
-                        addOrder(item)
+                        addOrder&&addOrder(item)
                     }}
                 >
                         <small className="opacity-60 font-semibold text-xs">Stock: {item.stock}</small><br />

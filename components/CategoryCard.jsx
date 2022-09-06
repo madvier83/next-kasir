@@ -5,7 +5,7 @@ export default function CategoryCard({title, id, categoryDelete, filterItems}) {
         <>
             <div 
                 className="flex justify-between shadow-lg mb-2 mr-2 w-48 h-14 text-accent-content bg-accent border-accent-focus rounded-2xl border-l-4 active:border-l-0 duration-100 select-none cursor-pointer group"
-                onClick={()=>filterItems(id)}
+                onClick={()=>filterItems&&filterItems(id)}
             >
                 <div className="flex mx-4 my-auto">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
