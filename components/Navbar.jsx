@@ -1,12 +1,7 @@
 import React, {useEffect, useState} from "react"
 import { useRouter } from "next/router"
 
-export default function Navbar() {
-    const [theme, setTheme] = useState()
-
-    useEffect(()=>{
-        setTheme(window.localStorage.getItem("theme"))
-    }, [])
+export default function Navbar({theme}) {
     return (
         <>
             <div data-theme={theme} className="navbar bg-neutral text-base">

@@ -1,31 +1,14 @@
 import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import Navbar from "./Navbar";
 
 const ThemeContext = React.createContext(null);
 
-export default function Drawer({children}) {
+export default function Drawer({children, changeTheme,  theme}) {
     const router = useRouter()
-    const [theme, setTheme] = useState("black")
-    
-    function themeInit() {
-        if(window.localStorage.getItem("theme")===null){
-            window.localStorage.setItem("theme", "night")
-        }
-    }
-    useEffect(()=>{
-        themeInit()
-        setTheme(window.localStorage.getItem("theme"))
-    }, [theme])
-    function setNewTheme(newTheme) {
-        window.localStorage.setItem("theme", newTheme)
-        setTheme(newTheme)
-    }
 
     return (
         <>
-            <ThemeContext.Provider value={theme}>
             <div data-theme={theme} className="drawer drawer-mobile">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
@@ -35,9 +18,10 @@ export default function Drawer({children}) {
                     <label htmlFor="my-drawer-2" className="drawer-overlay"></label> 
                     <ul className="menu p-4 overflow-y-auto w-48 bg-base-300 text-base-content">
                         <li className={`${router.pathname === "/dashboard" && "activeDrawer"} `}><Link href={"dashboard"}><a>Dashboard</a></Link></li>
-                        <li className={`${router.pathname === "/order" && "activeDrawer"} `}><Link href={"order"}><a>Order</a></Link></li>
                         <li className={`${router.pathname === "/items" && "activeDrawer"} `}><Link href={"items"}><a>Items</a></Link></li>
+                        <li className={`${router.pathname === "/order" && "activeDrawer"} `}><Link href={"order"}><a>Order</a></Link></li>
                         <li className={`${router.pathname === "/history" && "activeDrawer"} `}><Link href={"history"}><a>History</a></Link></li>
+                        <li className={`${router.pathname === "/exports" && "activeDrawer"} `}><Link href={"exports"}><a>Exports</a></Link></li>
                         <ul className="absolute bottom-20 ml-2">
                             <a href="https://github.com/madvier83" target="_blank" className="ml-2 mb-2 p-0 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="mr-2 bi bi-github" viewBox="0 0 16 16">
@@ -47,21 +31,20 @@ export default function Drawer({children}) {
                             </a>
                             <div className="divider w-36 text-xs">Themes</div>
                             <div className="flex flex-wrap opacity-50">
-                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("light")}>Light</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("dark")}>Dark</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("dracula")}>Dracula</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("black")}>Black</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("night")}>Night</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("forest")}>Forest</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("corporate")}>Corporate</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("coffee")}>Coffee</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>setNewTheme("synthwave")}>Synthwave</button>
+                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("light")}>Light</button>
+                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("dark")}>Dark</button>
+                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("dracula")}>Dracula</button>
+                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("black")}>Black</button>
+                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("night")}>Night</button>
+                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("forest")}>Forest</button>
+                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("corporate")}>Corporate</button>
+                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("coffee")}>Coffee</button>
+                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("synthwave")}>Synthwave</button>
                             </div>
                         </ul>
                     </ul>
                 </div>
             </div>
-            </ThemeContext.Provider>
         </>
     )
 }
