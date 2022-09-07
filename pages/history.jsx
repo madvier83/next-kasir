@@ -200,7 +200,6 @@ export default function History() {
                     )}
                 </div>
 
-                {/* modal */}
                 <input type="checkbox" className="modal-toggle" />
                 <div
                     className={`modal modal-bottom sm:modal-middle ${

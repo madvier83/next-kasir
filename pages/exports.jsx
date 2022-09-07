@@ -85,12 +85,7 @@ export default function Exports() {
                         <h1 className="text-xl font-bold text-base-content pt-6 pl-6 pb-6">
                             Categories & Items
                         </h1>
-                        {/* <button
-                            onClick={() => downloadExcel()}
-                            className="btn btn-sm btn-success shadow-lg mb-2 ml-4 w-44 select-none hover:animate-pulse"
-                        >
-                            <span>Download .xlsx</span>
-                        </button> */}
+                        
                         <button
                             onClick={() => downloadJson({categories, items})}
                             className="btn btn-sm btn-warning shadow-lg mb-2 ml-4 w-44 select-none hover:animate-pulse"

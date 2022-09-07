@@ -337,7 +337,6 @@ export default function Items() {
                     </div>
                 )}
 
-                {/* category modal */}
                 <div
                     className={`modal modal-bottom sm:modal-middle ${
                         categoryModal && 'modal-open'
@@ -379,14 +378,10 @@ export default function Items() {
                                     className="select select-bordered"
                                     disabled
                                 >
-                                    <option disabled defaultValue={''}>
+                                    <option disabled defaultValue={'-'}>
                                         Pick one
                                     </option>
-                                    <option>Star Wars</option>
-                                    <option>Harry Potter</option>
-                                    <option>Lord of the Rings</option>
-                                    <option>Planet of the Apes</option>
-                                    <option>Star Trek</option>
+                                    <option>Default</option>
                                 </select>
                             </div>
 
@@ -410,7 +405,7 @@ export default function Items() {
                         </form>
                     </div>
                 </div>
-                {/* item modal  */}
+
                 <div
                     className={`modal modal-bottom sm:modal-middle ${
                         itemModal && 'modal-open'
@@ -529,7 +524,7 @@ export default function Items() {
                         </form>
                     </div>
                 </div>
-                {/* item update modal  */}
+
                 <div
                     className={`modal modal-bottom sm:modal-middle ${
                         itemUpdateModal && 'modal-open'
@@ -647,7 +642,7 @@ export default function Items() {
                         </form>
                     </div>
                 </div>
-                {/* end modal */}
+                
             </GlobalDataProvider>
         </>
     )
