@@ -1,6 +1,6 @@
 import React from "react"
 
-export default function CategoryCard({title, id, categoryDelete, filterItems}) {
+export default function CategoryCard({title, id, filterItems}) {
     return (
         <>
             <div 
@@ -13,13 +13,6 @@ export default function CategoryCard({title, id, categoryDelete, filterItems}) {
                     </svg>
                     <span>{title}</span>
                 </div>
-                {/* {categoryDelete &&
-                    <div className="relative">
-                        <button className="btn btn-xs btn-error absolute -right-10 -top-3 lg:hidden group-hover:block duration-100 animate-pulse" onClick={()=>categoryDelete(id)}>
-                            Delete
-                        </button>
-                    </div>
-                } */}
             </div>
         </>
     )

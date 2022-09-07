@@ -154,6 +154,7 @@ export default function Dashboard({ constructor }) {
                         <a
                             target="_blank"
                             href="https://github.com/madvier83/next-kasir"
+                            rel="noreferrer"
                             className="stat-desc text-secondary"
                         >
                             View On GitHub
