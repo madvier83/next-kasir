@@ -239,7 +239,7 @@ export default function Items() {
                     )
                 ) : (
                     <div className="ml-4 mt-4">
-                        <h1 className="opacity-50 ml-2">// No Category</h1>
+                        <h1 className="opacity-50 ml-2">No Category</h1>
                     </div>
                 )}
 
@@ -333,7 +333,7 @@ export default function Items() {
                         >
                             <span>+ Add Item</span>
                         </label>
-                        <h1 className="opacity-50 ml-2">// No Item</h1>
+                        <h1 className="opacity-50 ml-2">No Item</h1>
                     </div>
                 )}
 

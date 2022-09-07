@@ -19,7 +19,7 @@ export default function History() {
         constructor()
     }, [])
 
-    // Data handler
+
     function deleteHistory(id) {
         const oldHistory = history
         let newHistory = []
@@ -38,7 +38,7 @@ export default function History() {
         setItem(item)
         setDetailModal(!detailModal)
     }
-    // Conver items json to sting for xlsx
+
     function historyItemStringify() {
         let newHistory = []
         for (let i = 0; i < history.length; i++) {
@@ -195,7 +195,7 @@ export default function History() {
                         </div>
                     ) : (
                         <h2 className="text-neutral-content opacity-50">
-                            // No History
+                            No History
                         </h2>
                     )}
                 </div>
