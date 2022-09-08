@@ -187,8 +187,25 @@ export default function Order() {
             />
         )
     })
+
+    async function download() {
+        const canvas = await html2canvas(
+            document.querySelector('#screenshot'),
+            { backgroundColor: '#000000' }
+        )
+        canvas.style.display = 'none'
+        document.body.appendChild(canvas)
+        const image = canvas
+            .toDataURL('image/png')
+            .replace('image/png', 'image/octet-stream')
+        const a = document.createElement('a')
+        a.setAttribute('download', `${orders.date + ' ' + orders.id} .png`)
+        a.setAttribute('href', image)
+        a.click()
+    }
+
     const orderList = orders.items.map((item) => (
-        <div className="flex" key={nanoid()}>
+        <div className="flex justify-between" key={nanoid()}>
             <p className="text-sm">{item.item}</p>
             <div className="flex items-center w-1/2">
                 <small>
@@ -202,34 +219,18 @@ export default function Order() {
         </div>
     ))
 
-    async function download() {
-        const canvas = await html2canvas(
-            document.querySelector('#screenshot'),
-            { backgroundColor: '#000000' }
-        )
-        canvas.style.display = 'none'
-        document.body.appendChild(canvas)
-        const image = canvas
-            .toDataURL('image/png')
-            .replace('image/png', 'image/octet-stream')
-        const a = document.createElement('a')
-        a.setAttribute('download', `${orders.date + ' ' + orders.id}`)
-        a.setAttribute('href', image)
-        a.click()
-    }
-
     return (
         <>
             <Head>
                 <title>CookiePOS | Order</title>
             </Head>
             <GlobalDataProvider>
-                <div className="p-2 flex md:flex-row flex-col-reverse">
-                    <div className="flex flex-col lg:w-[80vw] h-full m-2">
-                        <h1 className="text-lg lg:text-xl font-bold text-base-content pt-2 pb-6 pl-2">
+                <div className="p-2 flex md:flex-row flex-col-reverse justify-between">
+                    <div className="flex flex-col">
+                        <h1 className="hidden md:block text-lg lg:text-xl font-bold text-base-content pt-4 pb-6 md:pl-4 mx-auto md:mx-0">
                             Category
                         </h1>
-                        <div className="flex flex-wrap">
+                        <div className="flex flex-wrap justify-center md:justify-start">
                             <CategoryCard
                                 title="Show All"
                                 id={'all'}
@@ -237,29 +238,27 @@ export default function Order() {
                             />
                             {categoryList}
                         </div>
-                        <h1 className="text-lg lg:text-xl font-bold text-base-content pt-2 pb-6 pl-2">
+                        <h1 className="hidden md:block text-lg lg:text-xl font-bold text-base-content pt-2 pb-2 md:pl-4 mx-auto md:mx-0">
                             Items
                         </h1>
-                        <div className="flex flex-wrap">{itemList}</div>
+                        <div className="flex flex-wrap justify-center md:justify-start pt-4">
+                            {itemList}
+                        </div>
                     </div>
 
-                    <div className="flex mt-2 mr-2">
-                        <div className="mx-auto">
-                            <div className="card bg-base-300 text-base-content shadow-xl">
+                    <div className="flex mt-2 mx-2">
+                        <div className="mx-auto mb-8">
+                            <div className="card bg-base-300 w-72 text-base-content shadow-xl">
                                 {/* struct print area */}
                                 <div
                                     id="screenshot"
-                                    className="card-body bg-base-300 w-80 relative"
+                                    className="flex flex-col p-8 bg-base-300 relative"
                                 >
                                     <div className="flex place-items-end justify-between">
                                         <b className="card-title">Order</b>
-                                        <div>
+                                        <div className='flex flex-col'>
                                             <small className="text-xs opacity-50 mb-1">
                                                 {orders.date}
-                                            </small>
-                                            <small className="text-xs opacity-50 mb-1">
-                                                {' '}
-                                                ID: {orders.id}
                                             </small>
                                         </div>
                                     </div>
@@ -313,7 +312,7 @@ export default function Order() {
                                     </div>
                                 </div>
 
-                                <div className="card-body bg-base-300 w-80 relative">
+                                <div className="card-body bg-base-300 w-72 relative">
                                     <div className="flex flex-col">
                                         <form
                                             onSubmit={(event) =>
@@ -344,17 +343,12 @@ export default function Order() {
                                                 >
                                                     Clear
                                                 </div>
-                                                <button className="btn btn-accent w-1/2 btn-md flex">
+                                                <button className="btn btn-warning w-1/2 btn-md flex">
                                                     Checkout
                                                 </button>
                                             </div>
                                         </form>
                                     </div>
-                                    {/* <div>
-                                                <button onClick={()=>download()}>
-                                                    Export As PNG
-                                                </button>
-                                            </div> */}
                                 </div>
                             </div>
                         </div>

@@ -178,7 +178,7 @@ export default function History() {
                     </label>
                     {history.length > 0 ? (
                         <div className="overflow-x-auto">
-                            <table className="table table-zebra mb-64">
+                            <table className="table table-zebra mb-64 ml-4 mt-4">
                                 <thead>
                                     <tr>
                                         <th className="w-24">id</th>
@@ -194,7 +194,7 @@ export default function History() {
                             </table>
                         </div>
                     ) : (
-                        <h2 className="text-neutral-content opacity-50">
+                        <h2 className="text-neutral-content opacity-50 ml-4 mt-4">
                             No History
                         </h2>
                     )}
@@ -216,10 +216,6 @@ export default function History() {
                                 <div>
                                     <small className="text-xs opacity-50 mb-1">
                                         {item.date}
-                                    </small>
-                                    <small className="text-xs opacity-50 mb-1">
-                                        {' '}
-                                        ID: {item.id}
                                     </small>
                                 </div>
                             </div>

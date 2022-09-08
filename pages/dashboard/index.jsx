@@ -96,7 +96,7 @@ export default function Dashboard({ constructor }) {
                 <title>CookiePOS | Dashboard</title>
             </Head>
             <GlobalDataProvider>
-                <div className="stats shadow m-4 mb-8 flex flex-col md:flex-row max-w-4xl">
+                <div className="shadow m-4 mb-8 flex flex-col md:flex-row max-w-4xl">
                     <div className="stat">
                         <div className="stat-figure text-primary">
                             <svg
@@ -186,8 +186,8 @@ export default function Dashboard({ constructor }) {
                     ) : (
                         <div className="p-2 w-full ">
                             <div className="rounded-xl w-full shadow-xl bg-primary text-primary-content ">
-                                <div className="flex flex-row justify-between px-12 sm:px-32 md:px-10 lg:px-14 py-12 overflow-scroll">
-                                    <div className="">
+                                <div className="flex flex-row justify-center py-12">
+                                    <div className="mx-4">
                                         <div className="stat-title">
                                             Items Sold
                                         </div>
@@ -219,7 +219,7 @@ export default function Dashboard({ constructor }) {
                                             </button>
                                         </div>
                                     </div>
-                                    <div className="ml-1">
+                                    <div className="mx-4">
                                         <div className="stat-title">
                                             Balance
                                         </div>
@@ -250,7 +250,7 @@ export default function Dashboard({ constructor }) {
                             <div className="card-body">
                                 <div className="flex">
                                     <div
-                                        className="mx-auto radial-progress text-success font-bold"
+                                        className="mx-auto my-auto radial-progress text-success font-bold"
                                         style={{
                                             '--value': progress,
                                             '--size': '9rem',
@@ -278,8 +278,9 @@ export default function Dashboard({ constructor }) {
                                             <p
                                                 className={`text-sm opacity-50 ${
                                                     setup.categories &&
-                                                    'text-success opacity-70'
+                                                    'text-success opacity-70 cursor-pointer'
                                                 }`}
+                                                onClick={()=>router.push("items")}
                                             >
                                                 Set Categories
                                             </p>
@@ -296,8 +297,9 @@ export default function Dashboard({ constructor }) {
                                             <p
                                                 className={`text-sm opacity-50 ${
                                                     setup.items &&
-                                                    'text-success opacity-70'
+                                                    'text-success opacity-70 cursor-pointer'
                                                 }`}
+                                                onClick={()=>router.push("items")}
                                             >
                                                 Add Items
                                             </p>
@@ -314,8 +316,9 @@ export default function Dashboard({ constructor }) {
                                             <p
                                                 className={`text-sm opacity-50 ${
                                                     setup.history &&
-                                                    'text-success opacity-70'
+                                                    'text-success opacity-70 cursor-pointer'
                                                 }`}
+                                                onClick={()=>router.push("order")}
                                             >
                                                 Take Orders
                                             </p>
@@ -335,8 +338,9 @@ export default function Dashboard({ constructor }) {
                                                 className={`text-sm opacity-50 ${
                                                     setup.backup &&
                                                     setup.history &&
-                                                    'text-success opacity-70'
+                                                    'text-success opacity-70 cursor-pointer'
                                                 }`}
+                                                onClick={()=>router.push("exports")}
                                             >
                                                 Backup your data
                                             </p>
