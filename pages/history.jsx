@@ -112,7 +112,7 @@ export default function History() {
                             <div className="">{itemList}</div>
                         </div>
                         <div>
-                            <p className="ml-2 bg-transparent">...</p>
+                            <p className="ml-2 bg-transparent">[{obj.qtys}]</p>
                         </div>
                     </div>
                 </td>
@@ -224,7 +224,7 @@ export default function History() {
                             {item.id &&
                                 item.items.map((item) => (
                                     <div className="flex" key={item.id}>
-                                        <p className="text-sm">{item.item}</p>
+                                        <p className="text-sm w-1/2">{item.item}</p>
                                         <div className="flex items-center w-1/2">
                                             <small>
                                                 {numeral(item.price).format(

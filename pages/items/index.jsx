@@ -128,6 +128,14 @@ export default function Items() {
         setItems(newItems)
         window.localStorage.setItem('items', JSON.stringify(newItems))
     }
+    function openItemUpdate(obj) {
+        setItemUpdateModal(
+            (prev) => !prev
+        )
+        setUpdateItemForm(
+            obj
+        )
+    }
 
     const categoryList = categories?.map((cat) => (
         <CategoryCard
@@ -273,16 +281,16 @@ export default function Items() {
                                             key={obj.id}
                                             className="group hover:text-accent cursor-pointer"
                                         >
-                                            <td>{obj.id}</td>
-                                            <td>{obj.item}</td>
-                                            <td>
+                                            <td onClick={() => {openItemUpdate(obj)}}>{obj.id}</td>
+                                            <td onClick={() => {openItemUpdate(obj)}}>{obj.item}</td>
+                                            <td onClick={() => {openItemUpdate(obj)}}>
                                                 {
                                                     JSON.parse(obj.category)
                                                         .category
                                                 }
                                             </td>
-                                            <td>{obj.stock}</td>
-                                            <td>{obj.price}</td>
+                                            <td onClick={() => {openItemUpdate(obj)}}>{obj.stock}</td>
+                                            <td onClick={() => {openItemUpdate(obj)}}>{obj.price}</td>
                                             <td>
                                                 <div className="flex">
                                                     <button
@@ -305,14 +313,7 @@ export default function Items() {
                                                         </svg>
                                                     </button>
                                                     <button
-                                                        onClick={() => {
-                                                            setItemUpdateModal(
-                                                                (prev) => !prev
-                                                            )
-                                                            setUpdateItemForm(
-                                                                obj
-                                                            )
-                                                        }}
+                                                        onClick={() => {openItemUpdate(obj)}}
                                                         className="btn btn-xs btn-success px-2 ml-1"
                                                     >
                                                         Update
@@ -337,6 +338,7 @@ export default function Items() {
                     </div>
                 )}
 
+                {/* category modal */}
                 <div
                     className={`modal modal-bottom sm:modal-middle ${
                         categoryModal && 'modal-open'
@@ -405,7 +407,7 @@ export default function Items() {
                         </form>
                     </div>
                 </div>
-
+                {/* item modal */}
                 <div
                     className={`modal modal-bottom sm:modal-middle ${
                         itemModal && 'modal-open'
@@ -524,7 +526,7 @@ export default function Items() {
                         </form>
                     </div>
                 </div>
-
+                {/* item update modal */}
                 <div
                     className={`modal modal-bottom sm:modal-middle ${
                         itemUpdateModal && 'modal-open'
@@ -532,7 +534,7 @@ export default function Items() {
                 >
                     <div className="modal-box relative">
                         <form>
-                            <h3 className="font-bold text-lg">Update item</h3>
+                            <h3 className="font-bold text-lg">Update {updateItemForm?.item}</h3>
                             <div className="divider"></div>
 
                             <div className="form-control w-full max-w-xs mb-2">

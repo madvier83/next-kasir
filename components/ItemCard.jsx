@@ -1,28 +1,45 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useRouter } from 'next/router'
 
 export default function ItemCard({ item, addOrder, removeOrder, qty }) {
+    const router = useRouter()
     return (
-        <div className="select-none card card-compact border-primary-focus border-l-4 active:border-l-0 bg-primary duration-100 w-36 md:w-40 h-32 text-primary-content mb-2 mx-1">
-            <div className=" mt-2 ml-4">
+        <div
+            className={`${
+                item.stock > 0 ? 'opacity-100' : 'opacity-50'
+            } bg-primary text-primary-content border-primary-focus select-none card card-compact border-l-4 active:border-l-0 duration-100 w-36 md:w-40 h-32 mb-2 mx-1 group relative cursor-pointer`}
+        >
+            <div className=" mt-2 mx-3 w-[85%] overflow-hidden">
                 <div
                     className=""
                     onClick={() => {
                         addOrder && addOrder(item)
                     }}
                 >
-                    <small className="opacity-60 font-semibold text-xs">
+                    <small
+                        onClick={() => router.push('items')}
+                        className={`opacity-60 font-semibold text-xs hover:opacity-100`}
+                    >
                         Stock: {item.stock}
                     </small>
                     <br />
-                    <span className="text-xl font-bold">{item.item}</span>
+                    {item.item.length >= 12 ? (
+                        <span className="text-sm font-bold truncate">
+                            {item.item}
+                        </span>
+                    ) : (
+                        <span className="text-xl font-bold truncate">
+                            {item.item}
+                        </span>
+                    )}
                     <br />
                     <b className="opacity-50 text-sm">Rp. {item.price}</b>
                 </div>
             </div>
 
             {addOrder && removeOrder && (
-                <div className="flex justify-end">
-                    <div className="flex mt-1 mr-3 items-center">
+                <div className="flex absolute -right-1 bottom-2">
+                    <div className="flex mt-auto mr-3 items-center">
                         <button
                             className="btn text-primary-content bg-primary-focus bg-opacity-50 btn-sm hover:bg-primary-focus font-extrabold border-none"
                             onClick={() => {

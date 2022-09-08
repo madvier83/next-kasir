@@ -69,6 +69,10 @@ export default function Order() {
     }, [orders.items])
 
     function addOrder(item) {
+        if (item.stock <= 0) {
+            return
+        }
+
         let newItem = {
             qty: 1,
             ...item,
@@ -77,8 +81,6 @@ export default function Order() {
 
         let newItems = []
         let isNewItem = true
-
-        // console.log(orders.items[0].id = item.id)
         for (let i = 0; i < orders.items.length; i++) {
             if (orders.items[i].id == item.id) {
                 let qty = orders.items[i].qty
@@ -138,14 +140,35 @@ export default function Order() {
         event.preventDefault()
         await download()
 
+        // update item stock after purchase
+        const newItem = []
+        for (let i = 0; i < items.length; i++) {
+            let sample = items[i]
+            let item = null
+            for (let j = 0; j < orders.items.length; j++) {
+                if (orders.items[j].id == sample.id) {
+                    item = orders.items[j]
+                }
+            }
+            if (item) {
+                let stock = parseInt(sample.stock) - parseInt(item.qty)
+                newItem.push({ ...items[i], stock })
+            } else {
+                newItem.push({ ...items[i] })
+            }
+        }
+
+        setItems(newItem)
+        window.localStorage.setItem('items', JSON.stringify(newItem))
+
         const newHistory = history
         newHistory.unshift(orders)
+
         setHistory(newHistory)
         window.localStorage.setItem('history', JSON.stringify(history))
 
         setOrders(initialOrder)
     }
-
     function filterItems(filter) {
         if (items.length > 0) {
             if (filter === 'all') {
@@ -162,6 +185,21 @@ export default function Order() {
         filterItems('all')
     }, [items])
 
+    async function download() {
+        const canvas = await html2canvas(
+            document.querySelector('#screenshot'),
+            { backgroundColor: '#000000' }
+        )
+        canvas.style.display = 'none'
+        document.body.appendChild(canvas)
+        const image = canvas
+            .toDataURL('image/png')
+            .replace('image/png', 'image/octet-stream')
+        const a = document.createElement('a')
+        a.setAttribute('download', `${orders.date + ' ' + orders.id} .png`)
+        a.setAttribute('href', image)
+        a.click()
+    }
     const categoryList = categories?.map((cat) => (
         <CategoryCard
             key={cat.id}
@@ -187,26 +225,9 @@ export default function Order() {
             />
         )
     })
-
-    async function download() {
-        const canvas = await html2canvas(
-            document.querySelector('#screenshot'),
-            { backgroundColor: '#000000' }
-        )
-        canvas.style.display = 'none'
-        document.body.appendChild(canvas)
-        const image = canvas
-            .toDataURL('image/png')
-            .replace('image/png', 'image/octet-stream')
-        const a = document.createElement('a')
-        a.setAttribute('download', `${orders.date + ' ' + orders.id} .png`)
-        a.setAttribute('href', image)
-        a.click()
-    }
-
     const orderList = orders.items.map((item) => (
         <div className="flex justify-between" key={nanoid()}>
-            <p className="text-sm">{item.item}</p>
+            <p className="text-sm w-1/2">{item.item}</p>
             <div className="flex items-center w-1/2">
                 <small>
                     {numeral(item.price).format('0,0')}
@@ -256,7 +277,7 @@ export default function Order() {
                                 >
                                     <div className="flex place-items-end justify-between">
                                         <b className="card-title">Order</b>
-                                        <div className='flex flex-col'>
+                                        <div className="flex flex-col">
                                             <small className="text-xs opacity-50 mb-1">
                                                 {orders.date}
                                             </small>
