@@ -11,6 +11,7 @@ export default function Items() {
     const [categoryModal, setCategoryModal] = useState(false)
     const [itemModal, setItemModal] = useState(false)
     const [itemUpdateModal, setItemUpdateModal] = useState(false)
+    const [confirmModal, setConfirmModal] = useState({isOpen: false, message: "", callback: null})
 
     const initialCategoryForm = {
         id: nanoid(6),
@@ -87,6 +88,19 @@ export default function Items() {
         setCategoryModal((prev) => !prev)
     }
     function categoryDelete(id) {
+        let newItems = []
+        for(let i=0; i<items.length; i++) {
+            let sample = items[i]
+            if(JSON.parse(sample.category).id === id){
+                newItems.push({...sample, category: JSON.stringify(uncategorized)})
+            }else{
+                newItems.push({...sample})
+            }
+        }
+        setItems(newItems)
+        newItems = JSON.stringify(newItems)
+        window.localStorage.setItem("items", newItems)
+
         let newCategory = categories
         newCategory = newCategory.filter((cat) => cat.id !== id)
         newCategory = JSON.stringify(newCategory)
@@ -118,7 +132,6 @@ export default function Items() {
         setItemUpdateModal((prev) => !prev)
     }
     function itemDelete(id) {
-        console.log(id)
         const newItems = []
         for (let i = 0; i < items.length; i++) {
             if (items[i].id != id) {
@@ -135,6 +148,16 @@ export default function Items() {
         setUpdateItemForm(
             obj
         )
+    }
+
+    function confirm(message, callback) {
+        if(callback==null) {
+            callback = () => {return 0}
+        }
+        if(message==null) {
+            let message = "Confirm action"
+        }
+        setConfirmModal(prev=>{return {isOpen: !prev.isOpen, message, callback}})
     }
 
     const categoryList = categories?.map((cat) => (
@@ -217,9 +240,7 @@ export default function Items() {
                                                     <div className="flex">
                                                         <button
                                                             onClick={() =>
-                                                                categoryDelete(
-                                                                    obj.id
-                                                                )
+                                                                confirm("Delete category?", ()=>categoryDelete(obj.id))
                                                             }
                                                             className="btn btn-xs btn-error px-2"
                                                         >
@@ -295,7 +316,7 @@ export default function Items() {
                                                 <div className="flex">
                                                     <button
                                                         onClick={() =>
-                                                            itemDelete(obj.id)
+                                                            confirm("Delete item?", ()=>itemDelete(obj.id))
                                                         }
                                                         className="btn btn-xs btn-error px-2"
                                                     >
@@ -642,6 +663,38 @@ export default function Items() {
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+                {/* confirm modal */}
+                <div
+                    className={`modal modal-bottom sm:modal-middle ${
+                        confirmModal.isOpen && 'modal-open'
+                    }`}
+                >
+                    <div className="modal-box relative">
+                        <div className="flex text-lg font-bold">
+                            {confirmModal.message}
+                        </div>
+                        <div className="modal-action">
+                            <label
+                                className="btn bg-none"
+                                onClick={() =>
+                                    setConfirmModal((prev) => !prev)
+                                }
+                            >
+                                Cancel
+                            </label>
+                            <button
+                                className="btn btn-error"
+                                onClick={function() {
+                                    confirmModal.callback() 
+                                    confirm()
+                                    }
+                                }
+                            >
+                                Confirm
+                            </button>
+                        </div>
                     </div>
                 </div>
                 

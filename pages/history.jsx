@@ -10,6 +10,7 @@ export default function History() {
     const [history, setHistory] = useState([])
     const [item, setItem] = useState([])
     const [detailModal, setDetailModal] = useState(false)
+    const [confirmModal, setConfirmModal] = useState({isOpen: false, message: "", callback: null})
 
     function constructor() {
         let history = JSON.parse(window.localStorage.getItem('history'))
@@ -29,7 +30,6 @@ export default function History() {
                 newHistory.push(oldHistory[i])
             }
         }
-        console.log(newHistory)
         newHistory = JSON.stringify(newHistory)
         window.localStorage.setItem('history', newHistory)
         constructor()
@@ -38,59 +38,14 @@ export default function History() {
         setItem(item)
         setDetailModal(!detailModal)
     }
-
-    function historyItemStringify() {
-        let newHistory = []
-        for (let i = 0; i < history.length; i++) {
-            let arr = history[i]
-            let items = ''
-            arr.items.forEach(
-                (element) =>
-                    (items = items + element.item + ' x' + element.qty + ', ')
-            )
-            arr = {
-                ...arr,
-                items,
-            }
-            newHistory.push(arr)
+    function confirm(message, callback) {
+        if(callback==null) {
+            callback = () => {return 0}
         }
-        return newHistory
-    }
-    function downloadExcel(data) {
-        const worksheet = XLSX.utils.json_to_sheet(data)
-        const workbook = XLSX.utils.book_new()
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1')
-        const date = new Date().toLocaleString('en-us', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-        })
-        const fileName = 'CookiePOS History ' + date + '.xlsx'
-        XLSX.writeFile(workbook, fileName)
-    }
-    function downloadJson(data) {
-        const date = new Date().toLocaleString('en-us', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-        })
-        const fileName = 'CookiePOS History ' + date + '.json'
-        const jsonStr = JSON.stringify(data)
-        let element = document.createElement('a')
-        element.setAttribute(
-            'href',
-            'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr)
-        )
-        element.setAttribute('download', fileName)
-        element.style.display = 'none'
-        document.body.appendChild(element)
-        element.click()
-        document.body.removeChild(element)
-        window.localStorage.setItem('backup', 'ok')
+        if(message==null) {
+            let message = "Confirm action"
+        }
+        setConfirmModal(prev=>{return {isOpen: !prev.isOpen, message, callback}})
     }
 
     let historyList = history?.map((obj) => {
@@ -128,7 +83,7 @@ export default function History() {
                 <td>
                     <div className="flex">
                         <button
-                            onClick={() => deleteHistory(obj.id)}
+                            onClick={()=> confirm("Delete history?", () => deleteHistory(obj.id))}
                             className="btn btn-xs btn-error px-2"
                         >
                             <svg
@@ -199,7 +154,8 @@ export default function History() {
                         </h2>
                     )}
                 </div>
-
+                
+                {/* history modal */}
                 <input type="checkbox" className="modal-toggle" />
                 <div
                     className={`modal modal-bottom sm:modal-middle ${
@@ -283,6 +239,38 @@ export default function History() {
                             >
                                 Close
                             </label>
+                        </div>
+                    </div>
+                </div>
+                {/* confirm modal */}
+                <div
+                    className={`modal modal-bottom sm:modal-middle ${
+                        confirmModal.isOpen && 'modal-open'
+                    }`}
+                >
+                    <div className="modal-box relative">
+                        <div className="flex text-lg font-bold">
+                            {confirmModal.message}
+                        </div>
+                        <div className="modal-action">
+                            <label
+                                className="btn bg-none"
+                                onClick={() =>
+                                    setConfirmModal((prev) => !prev)
+                                }
+                            >
+                                Cancel
+                            </label>
+                            <button
+                                className="btn btn-error"
+                                onClick={function() {
+                                    confirmModal.callback() 
+                                    confirm()
+                                    }
+                                }
+                            >
+                                Confirm
+                            </button>
                         </div>
                     </div>
                 </div>

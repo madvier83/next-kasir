@@ -200,6 +200,7 @@ export default function Order() {
         a.setAttribute('href', image)
         a.click()
     }
+    
     const categoryList = categories?.map((cat) => (
         <CategoryCard
             key={cat.id}
