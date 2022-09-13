@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import GlobalDataProvider from '../../components/GlobalDataProvider'
+import GlobalDataProvider from '../components/GlobalDataProvider'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import numeral from 'numeral'
@@ -162,7 +162,7 @@ export default function Dashboard({ constructor }) {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap md:flex-nowrap m-4 h-58 max-w-4xl">
+                <div className="flex flex-wrap md:flex-nowrap m-1 md:m-4 max-w-4xl">
                     {!setup?.history ? (
                         <div className="p-2 w-full h-58 lg:w-2/3">
                             <div className="card w-full shadow-xl image-full bg-primary">
@@ -187,7 +187,7 @@ export default function Dashboard({ constructor }) {
                         <div className="p-2 w-full ">
                             <div className="rounded-xl w-full shadow-xl bg-primary text-primary-content ">
                                 <div className="flex flex-row justify-center py-12">
-                                    <div className="mx-4">
+                                    <div className="mx-1 md:mx-4">
                                         <div className="stat-title">
                                             Items Sold
                                         </div>
@@ -219,7 +219,7 @@ export default function Dashboard({ constructor }) {
                                             </button>
                                         </div>
                                     </div>
-                                    <div className="mx-4">
+                                    <div className="mx-1 md:mx-4">
                                         <div className="stat-title">
                                             Balance
                                         </div>
@@ -246,14 +246,14 @@ export default function Dashboard({ constructor }) {
                     )}
 
                     <div className="p-2 w-full h-full">
-                        <div className="card w-full h-full shadow-xl image-full">
+                        <div className="card w-full shadow-xl image-full card-compact">
                             <div className="card-body">
-                                <div className="flex">
+                                <div className="flex my-4">
                                     <div
                                         className="mx-auto my-auto radial-progress text-success font-bold"
                                         style={{
                                             '--value': progress,
-                                            '--size': '9rem',
+                                            '--size': '8rem',
                                             '--thickness': '5px',
                                         }}
                                     >

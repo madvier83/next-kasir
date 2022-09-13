@@ -268,8 +268,9 @@ export default function Order() {
                         </div>
                     </div>
 
-                    <div className="flex mt-2 mx-2">
+                    <div className="flex mt-2 md:mr-2">
                         <div className="mx-auto mb-8">
+
                             <div className="card bg-base-300 w-72 text-base-content shadow-xl">
                                 {/* struct print area */}
                                 <div
@@ -373,8 +374,10 @@ export default function Order() {
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
+
                 </div>
             </GlobalDataProvider>
         </>

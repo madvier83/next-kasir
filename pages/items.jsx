@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import GlobalDataProvider from '../../components/GlobalDataProvider'
-import CategoryCard from '../../components/CategoryCard'
+import GlobalDataProvider from '../components/GlobalDataProvider'
+import CategoryCard from '../components/CategoryCard'
 import Head from 'next/head'
 import { nanoid } from 'nanoid'
 
@@ -217,8 +217,8 @@ export default function Items() {
                         </div>
                     ) : (
                         <div className="flex flex-col pt-4 pl-4">
-                            <div className="overflow-x-auto">
-                                <table className="table table-zebra mt-2">
+                            <div className="overflow-x-auto overflow-scroll">
+                                <table className="table table-compact table-zebra mt-2">
                                     <thead>
                                         <tr>
                                             <th className="w-24">id</th>
@@ -284,8 +284,8 @@ export default function Items() {
                         >
                             <span>+ Add Item</span>
                         </label>
-                        <div className="overflow-x-auto">
-                            <table className="table table-zebra mb-64 mt-4">
+                        <div className="overflow-x-auto mb-64 overflow-scroll">
+                            <table className="table table-compact table-zebra mt-4">
                                 <thead>
                                     <tr>
                                         <th className="w-24">id</th>

@@ -21,7 +21,7 @@ export default function Drawer({children, changeTheme,  theme}) {
                         <li className={`${router.pathname === "/items" && "activeDrawer"} `}><Link href={"items"}><a>Items</a></Link></li>
                         <li className={`${router.pathname === "/order" && "activeDrawer"} `}><Link href={"order"}><a>Order</a></Link></li>
                         <li className={`${router.pathname === "/history" && "activeDrawer"} `}><Link href={"history"}><a>History</a></Link></li>
-                        <li className={`${router.pathname === "/exports" && "activeDrawer"} `}><Link href={"exports"}><a>Exports</a></Link></li>
+                        <li className={`${router.pathname === "/settings" && "activeDrawer"} `}><Link href={"settings"}><a>Settings</a></Link></li>
                         <ul className="absolute bottom-20 ml-2">
                             <a href="https://github.com/madvier83" target="_blank" rel="noreferrer" className="ml-2 mb-2 p-0 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="mr-2 bi bi-github" viewBox="0 0 16 16">

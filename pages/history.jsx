@@ -63,7 +63,7 @@ export default function History() {
                 <td onClick={() => openDetail(obj)}>{obj.date}</td>
                 <td onClick={() => openDetail(obj)}>
                     <div className="flex">
-                        <div className="overflow-scroll w-24 lg:w-64">
+                        <div className="overflow-hidden w-24 lg:w-64">
                             <div className="">{itemList}</div>
                         </div>
                         <div>
@@ -119,11 +119,10 @@ export default function History() {
             </Head>
             <GlobalDataProvider>
                 <div className="pt-4 flex flex-col">
-                    <div className="flex flex-col lg:w-[80vw] h-full">
-                        <h1 className="text-xl font-bold text-base-content pt-2 pl-6 pb-4">
-                            History
-                        </h1>
-                    </div>
+
+                    <h1 className="text-xl font-bold text-base-content pt-2 pl-6 pb-4">
+                        History
+                    </h1>
 
                     <label
                         onClick={() => router.push('order')}
@@ -131,9 +130,10 @@ export default function History() {
                     >
                         <span>+ Add Order</span>
                     </label>
+
                     {history.length > 0 ? (
-                        <div className="overflow-x-auto">
-                            <table className="table table-zebra mb-64 ml-4 mt-4">
+                        <div className="overflow-x-auto mb-64 ml-4 mt-4">
+                            <table className="table table-compact table-zebra">
                                 <thead>
                                     <tr>
                                         <th className="w-24">id</th>

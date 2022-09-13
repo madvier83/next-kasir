@@ -7,7 +7,7 @@ export default function ItemCard({ item, addOrder, removeOrder, qty }) {
         <div
             className={`${
                 item.stock > 0 ? 'opacity-100' : 'opacity-50'
-            } bg-primary text-primary-content border-primary-focus select-none card card-compact border-l-4 active:border-l-0 duration-100 w-36 md:w-40 h-32 mb-2 mx-1 group relative cursor-pointer`}
+            } bg-primary text-primary-content border-primary-focus select-none card card-compact border-l-4 active:border-l-0 duration-100 w-36 lg:w-40 h-32 mb-2 mx-1 group relative cursor-pointer`}
         >
             <div className=" mt-2 mx-3 w-[85%] overflow-hidden">
                 <div
