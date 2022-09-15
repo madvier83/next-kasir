@@ -175,9 +175,8 @@ export default function Items() {
                 <title>CookiePOS | Items</title>
             </Head>
             <GlobalDataProvider>
-                <div className="p-2 flex"></div>
 
-                <h1 className="text-xl font-bold text-base-content pt-2 pl-6 pb-2">
+                <h1 className="text-xl font-bold text-base-content pt-6 pl-6 pb-2">
                     Category
                 </h1>
 

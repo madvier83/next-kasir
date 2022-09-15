@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-
-const ThemeContext = React.createContext(null);
 
 export default function Drawer({children, changeTheme,  theme}) {
     const router = useRouter()
@@ -30,16 +28,16 @@ export default function Drawer({children, changeTheme,  theme}) {
                                 GitHub
                             </a>
                             <div className="divider w-36 text-xs">Themes</div>
-                            <div className="flex flex-wrap opacity-50">
-                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("light")}>Light</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("dark")}>Dark</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("dracula")}>Dracula</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("black")}>Black</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("night")}>Night</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("forest")}>Forest</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("corporate")}>Corporate</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("coffee")}>Coffee</button>
-                            <button className="btn btn-xs normal-case" onClick={()=>changeTheme("synthwave")}>Synthwave</button>
+                            <div className="flex flex-wrap opacity-50 w-36">
+                            <button className="w-5 h-5 rounded-full border-0 bg-[#3ABFF8] border-[#0F1729] m-1" onClick={()=>changeTheme("night")} title="Night"></button>
+                            <button className="w-5 h-5 rounded-full border-0 bg-[#4B6BFB] border-[#FFFFFF] m-1" onClick={()=>changeTheme("corporate")} title="Corporate"></button>
+                            <button className="w-5 h-5 rounded-full border-0 bg-[#641AE6] border-[#2A303C] m-1" onClick={()=>changeTheme("dark")} title="Dark"></button>
+                            <button className="w-5 h-5 rounded-full border-0 bg-[#FF7AC6] border-[#272935] m-1" onClick={()=>changeTheme("dracula")} title="Dracula"></button>
+                            <button className="w-5 h-5 rounded-full border-0 bg-[#E779C1] border-[#2D1B69] m-1" onClick={()=>changeTheme("synthwave")} title="Synthwave"></button>
+                            <button className="w-5 h-5 rounded-full border-0 bg-[#1EB854] border-[#171212] m-1" onClick={()=>changeTheme("forest")} title="Forest"></button>
+                            <button className="w-5 h-5 rounded-full border-0 bg-[#F28C18] border-[#212121] m-1" onClick={()=>changeTheme("halloween")} title="Halloween"></button>
+                            <button className="w-5 h-5 rounded-full border-0 bg-[#DC944C] border-[#211720] m-1" onClick={()=>changeTheme("coffee")} title="Coffee"></button>
+                            <button className="w-5 h-5 rounded-full border-0 bg-[#343232] border-[#000000] m-1" onClick={()=>changeTheme("black")} title="Black"></button>
                             </div>
                         </ul>
                     </ul>

@@ -198,7 +198,7 @@ export default function Exports() {
                                         </div>
 
                                         <div className="flex flex-wrap justify-end items-center mt-8 mx-4 mb-4">
-                                            <b className='font-semibold text-sm md:text-lg'>Previous items & categories will be replaced!</b>
+                                            <b className='font-semibold text-sm md:text-lg my-2'>Previous items & categories will be replaced!</b>
                                             <button
                                                 onClick={() => {setCategoriesPreview([]); setItemsPreview([])}}
                                                 className="btn btn-sm btn-error shadow-lg mb-2 ml-12 w-24 select-none hover:animate-pulse"
@@ -225,7 +225,7 @@ export default function Exports() {
                     </div>
                     <div className="flex flex-col lg:w-[80vw] h-full">
                         <h1 className="text-xl font-bold text-base-content pt-6 pl-6 pb-6">
-                            Order History
+                            History
                         </h1>
                         <button
                             onClick={() =>

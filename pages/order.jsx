@@ -351,11 +351,15 @@ export default function Order() {
                                                     setOrders((prev) => {
                                                         return {
                                                             ...prev,
-                                                            cash: event.target
-                                                                .value,
+                                                            cash: event.target.value,
                                                         }
                                                     })
                                                 }}
+                                                // onKeyPress={(event) => {
+                                                //     if (!/[0-9]/.test(event.key)) {
+                                                //         event.preventDefault()
+                                                //     }
+                                                // }}
                                             />
                                             <div className="flex justify-between">
                                                 <div
