@@ -132,7 +132,7 @@ export default function History() {
                     </label>
 
                     {history.length > 0 ? (
-                        <div className="overflow-x-auto mb-64 ml-4 mt-4">
+                        <div className="overflow-x-auto mr-2 ml-4 mt-4">
                             <table className="table table-compact table-zebra">
                                 <thead>
                                     <tr>

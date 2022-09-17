@@ -45,15 +45,17 @@ export default function GlobalDataProvider({children}) {
     },[])
     return (
         <>
+        <div className="h-screen overflow-hidden">
             <Navbar 
                 theme={theme} 
             />
             <Drawer 
                 changeTheme={changeTheme} 
                 theme={theme}
-            >
+                >
                 {children}
             </Drawer>
+        </div>
         </>
     )
 }

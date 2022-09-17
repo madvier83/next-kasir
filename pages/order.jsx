@@ -360,17 +360,18 @@ export default function Order() {
                                                 //         event.preventDefault()
                                                 //     }
                                                 // }}
+                                                required
                                             />
-                                            <div className="flex justify-between">
+                                            <div className="flex justify-between mr-1">
                                                 <div
-                                                    className="btn btn-neutral w-1/2 btn-md mr-1"
+                                                    className={`btn ${orders.qtys<=0?"btn-disabled":"btn-ghost"} w-1/2 btn-md mr-1`}
                                                     onClick={() =>
                                                         setOrders(initialOrder)
                                                     }
                                                 >
                                                     Clear
                                                 </div>
-                                                <button className="btn btn-warning w-1/2 btn-md flex">
+                                                <button className="btn btn-warning w-1/2 btn-md flex" disabled={orders.qtys<=0}>
                                                     Checkout
                                                 </button>
                                             </div>

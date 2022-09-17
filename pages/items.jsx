@@ -216,7 +216,7 @@ export default function Items() {
                         </div>
                     ) : (
                         <div className="flex flex-col pt-4 pl-4">
-                            <div className="overflow-x-auto overflow-scroll">
+                            <div className="overflow-x-auto overflow-scroll overflow-y-hidden">
                                 <table className="table table-compact table-zebra mt-2">
                                     <thead>
                                         <tr>
@@ -276,14 +276,14 @@ export default function Items() {
                 </h1>
 
                 {items?.length > 0 ? (
-                    <div className="flex flex-col pt-4 pl-4 max-w-4xl">
+                    <div className="flex flex-col pt-4 pl-4 mr-2 max-w-4xl">
                         <label
                             onClick={() => setItemModal((prev) => !prev)}
                             className="btn btn-sm btn-primary shadow-lg mb-2 mr-2 w-44 select-none hover:animate-pulse"
                         >
                             <span>+ Add Item</span>
                         </label>
-                        <div className="overflow-x-auto mb-64 overflow-scroll">
+                        <div className="overflow-x-auto overflow-scroll overflow-y-hidden">
                             <table className="table table-compact table-zebra mt-4">
                                 <thead>
                                     <tr>
@@ -365,7 +365,7 @@ export default function Items() {
                     }`}
                 >
                     <div className="modal-box relative">
-                        <form>
+                        <form onSubmit={categorySubmit}>
                             <h3 className="font-bold text-lg">
                                 Add new category
                             </h3>
@@ -419,7 +419,6 @@ export default function Items() {
                                 </label>
                                 <button
                                     className="btn btn-success"
-                                    onClick={categorySubmit}
                                 >
                                     Save
                                 </button>
@@ -434,7 +433,7 @@ export default function Items() {
                     }`}
                 >
                     <div className="modal-box relative">
-                        <form>
+                        <form onSubmit={itemSubmit}>
                             <h3 className="font-bold text-lg">Add new item</h3>
                             <div className="divider"></div>
 
@@ -453,6 +452,7 @@ export default function Items() {
                                     }
                                     placeholder="e.g. drinks"
                                     className="input input-bordered text-base w-full max-w-xs"
+                                    required
                                 />
                             </div>
 
@@ -474,6 +474,7 @@ export default function Items() {
                                     }
                                     placeholder="e.g. 25000"
                                     className="input input-bordered text-base w-full max-w-xs"
+                                    required
                                 />
                             </div>
 
@@ -495,6 +496,7 @@ export default function Items() {
                                     }
                                     placeholder="e.g. 150"
                                     className="input input-bordered text-base w-full max-w-xs"
+                                    required
                                 />
                             </div>
 
@@ -538,7 +540,6 @@ export default function Items() {
                                 </label>
                                 <button
                                     className="btn btn-success"
-                                    onClick={itemSubmit}
                                 >
                                     Save
                                 </button>
