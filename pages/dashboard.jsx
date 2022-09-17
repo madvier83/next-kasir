@@ -79,16 +79,14 @@ export default function Dashboard({ constructor }) {
         constructor()
     }, [])
 
-    // useEffect(() => {
-        // async function getStar() {
-        //     let star = await fetch("https://api.github.com/repos/madvier83/next-kasir/stargazers")
-        //     .then(res => res.json)
-        //     .then(data => document.body.append())
-        //     console.log(star)
-        //     setStargazer(star.body.length)
-        // }
-        // getStar()
-    // }, [])
+    useEffect(() => {
+        async function getStar() {
+            let star = await fetch("https://api.github.com/repos/madvier83/next-kasir")
+            star = await star.json()
+            setStargazer(star.stargazers_count)
+        }
+        getStar()
+    }, [])
 
     return (
         <>
@@ -100,27 +98,31 @@ export default function Dashboard({ constructor }) {
                     
                     <div className={`flex ${setup.history?"flex-col-reverse":"flex-col"}`}>
 
-                        <div className="m-4 mb-8 flex flex-col md:flex-row max-w-4xl">
+                        <div className="m-4 mb-8 flex flex-col md:flex-row max-w-4xl select-none">
+
                             <div className="stat">
                                 <div className="stat-figure text-primary">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        className="inline-block w-8 h-8 stroke-current"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                                        ></path>
-                                    </svg>
+
+                                    <a href="https://github.com/madvier83/next-kasir" target="_blank" rel='noreferer'>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            className="inline-block w-8 h-8 stroke-current"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                                            ></path>
+                                        </svg>
+                                    </a>
                                 </div>
                                 <div className="stat-title">GitHub Stars</div>
-                                <div className="stat-value text-primary">
-                                    {stargazer}
-                                </div>
+                                    <div className="stat-value text-primary">
+                                        {stargazer}
+                                    </div>
                                 <div className="stat-desc">0% more than last month</div>
                             </div>
 
@@ -141,7 +143,7 @@ export default function Dashboard({ constructor }) {
                                     </svg>
                                 </div>
                                 <div className="stat-title">Page Views</div>
-                                <div className="stat-value text-secondary">0.0M</div>
+                                <div className="stat-value text-secondary">0.1K</div>
                                 <div className="stat-desc">0% more than last month</div>
                             </div>
 
@@ -360,7 +362,7 @@ export default function Dashboard({ constructor }) {
                     
                     </div>
 
-                    <div className="mockup-code max-w-4xl mx-3 md:mx-4 mb-32 bg-base-300 text-base-content">
+                    <div className="mockup-code max-w-4xl mx-3 md:mx-4 mb-16 bg-base-300 text-base-content">
                         <pre data-prefix="$" className="font-semibold"><code>What's new</code></pre>
                         <pre data-prefix=">" className=""><code>V1.1 <span className='opacity-20'> - 15 Sep 2022 - </span></code></pre>
                         <pre data-prefix="" className="opacity-50"><code>- Bug Fixes</code></pre>
