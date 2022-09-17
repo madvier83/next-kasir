@@ -103,7 +103,7 @@ export default function Dashboard({ constructor }) {
                             <div className="stat">
                                 <div className="stat-figure text-primary">
 
-                                    <a href="https://github.com/madvier83/next-kasir" target="_blank" rel='noreferer'>
+                                    <a href="https://github.com/madvier83/next-kasir" target="_blank" rel='noreferrer'>
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"

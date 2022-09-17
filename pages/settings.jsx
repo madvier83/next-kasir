@@ -258,7 +258,7 @@ export default function Exports() {
                     <a
                         href="https://github.com/madvier83/next-kasir/issues"
                         target="_blank"
-                        rel="noreferer"
+                        rel="noreferrer"
                         className="btn btn-sm btn-error shadow-lg mb-2 ml-4 w-44 select-none hover:animate-pulse"
                     >
                         <span>Report Issue</span>
