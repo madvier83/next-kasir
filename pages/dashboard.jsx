@@ -348,7 +348,7 @@ export default function Dashboard({ constructor }) {
                                                             setup.history &&
                                                             'text-success opacity-70 cursor-pointer'
                                                         }`}
-                                                        onClick={()=>router.push("exports")}
+                                                        onClick={()=>router.push("settings")}
                                                     >
                                                         Backup your data
                                                     </p>
